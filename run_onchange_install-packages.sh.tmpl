@@ -1,12 +1,26 @@
 #!/usr/bin/env bash
 # run_onchange_install-packages.sh.tmpl
-# Hash of the package list below — changes here re-trigger the script
-# packages-hash: {{ .chezmoi.data.packages | toJson | sha256sum }}
+# packages-hash: {{ .packages | toJson | sha256sum }}
 
 set -euo pipefail
 
-PACMAN_PKGS="{{ .packages.base | join " " }} {{ index .packages .machine_role | join " " }}"
-AUR_PKGS="{{ .packages.aur.base | join " " }}{{ if hasKey .packages.aur .machine_role }} {{ index .packages.aur .machine_role | join " " }}{{ end }}"
+PACMAN_PKGS="{{ .packages.base | join " " }}"
+
+{{- if hasKey .packages .machine_role }}
+PACMAN_PKGS+=" {{ index .packages .machine_role | join " " }}"
+{{- end }}
+
+{{- if hasKey .packages "aur" }}
+AUR_PKGS="{{ .packages.aur.base | join " " }}"
+{{- if hasKey .packages.aur .machine_role }}
+AUR_PKGS+=" {{ index .packages.aur .machine_role | join " " }}"
+{{- end }}
+{{- else }}
+AUR_PKGS=""
+{{- end }}
 
 sudo pacman -S --needed --noconfirm $PACMAN_PKGS
-yay -S --needed --noconfirm $AUR_PKGS
+
+if [[ -n "$AUR_PKGS" ]]; then
+    yay -S --needed --noconfirm $AUR_PKGS
+fi
