@@ -1,0 +1,134 @@
+# If not running interactively, don't do anything
+[[ $- != *i* ]] && return
+
+# Path to your oh-my-zsh installation.
+export ZSH=$HOME/.oh-my-zsh
+
+# Set name of the theme to load. Optionally, if you set this to "random"
+# it'll load a random theme each time that oh-my-zsh is loaded.
+# See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
+# ZSH_THEME="garyblessington"
+
+# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
+# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
+# Example format: plugins=(rails git textmate ruby lighthouse)
+# Add wisely, as too many plugins slow down shell startup.
+plugins=(
+    git
+    zsh-autosuggestions
+    zsh-syntax-highlighting
+    history-substring-search
+    you-should-use
+    zsh-bat
+    jump
+)
+
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#867d73'
+
+# Load Oh my zsh
+source "$ZSH/oh-my-zsh.sh"
+
+# Prevent OMZ's git alias from conflicting with Omarchy's worktree function
+unalias ga 2>/dev/null
+unalias gd 2>/dev/null
+
+# Load zsh options, keybindings, and completion
+[[ -f /usr/share/omarchy-zsh/shell/zoptions ]] && source /usr/share/omarchy-zsh/shell/zoptions
+
+# Load shared shell configuration (aliases, functions, environment, tool init)
+[[ -f /usr/share/omarchy-zsh/shell/all ]] && source /usr/share/omarchy-zsh/shell/all
+
+# Add your own customizations below
+#
+# Make an alias for invoking commands you use constantly
+# alias p='python'
+# alias cx="claude --permission-mode=plan --allow-dangerously-skip-permissions"
+
+# History
+export HISTSIZE=500000
+export SAVEHIST=500000
+
+# Defaults
+export EDITOR=nvim
+export BROWSER=firefox
+
+# Path
+export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
+
+# Set personal aliases, overriding those provided by oh-my-zsh libs,
+# plugins, and themes. Aliases can be placed here, though oh-my-zsh
+# users are encouraged to define aliases within the ZSH_CUSTOM folder.
+# For a full list of active aliases, run `alias`.
+#
+# Example aliases
+# alias zshconfig="mate ~/.zshrc"
+# alias ohmyzsh="mate ~/.oh-my-zsh"
+alias h="history"
+alias p="pwd -P"
+alias s="sudo -s"
+alias CD="cd"
+alias ff='firefox'
+# Force tmux to use 256 colors
+# Either set this or TERM=xterm (or both if tmux keeps messing up?)
+#alias tmux="tmux -2"
+# clock
+#alias c="while sleep 1;do tput sc;tput cup 0 $(($(tput cols)-29));date;tput rc;done &; clear"
+
+alias netprocs="lsof -P -i -n"
+alias up="sudo apt update && sudo apt upgrade -y && ~/scripts/update-all.sh"
+# So that sudo doesnt override aliases (doesnt work with flags)
+# alias sudo='sudo '
+
+# nvidia optimus -> prime select 
+alias nvidia="sudo prime-select nvidia"
+alias intel="sudo prime-select intel"
+# cpu governor
+alias gameoff="sudo cpufreq-set -g powersave"
+alias gameon="sudo cpufreq-set -g performance"
+
+# translate-shell: brief
+alias t='trans -brief'
+
+#custom aliases
+alias nah='git reset --hard && git clean -df'
+
+alias uuid='uuidgen | tr -d "\n" | clipcopy && echo "Copied uuid $(clippaste) to clipboard"'
+
+# GIT
+alias gmm='gcm && git pull && git checkout - && git merge master'
+alias gpnb='git push --set-upstream origin $(git branch | grep \* | cut -d ” ” -f2)'
+
+# LOCAL SERVERS
+alias serve='php -S localhost:8000'
+
+# Load Bit Academy rc file if exists
+if [ -f ~/.bit-academy-rc.sh ]; then
+    source ~/.bit-academy-rc.sh
+fi
+
+eval "$(starship init zsh)"
+
+export CHROME_BIN=/usr/bin/chromium-browser
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+
+[ -s "/home/niels/.jabba/jabba.sh" ] && source "/home/niels/.jabba/jabba.sh"
+
+# pnpm
+export PNPM_HOME='/home/niels/.local/share/pnpm'
+case ":$PATH:" in
+  *":$PNPM_HOME/bin:"*) ;;
+  *) export PATH="$PNPM_HOME/bin:$PATH" ;;
+esac
+# pnpm end
+
+# yazi
+function y() {
+	local tmp cwd; tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
+	command yazi "$@" --cwd-file="$tmp"
+	IFS= read -r -d '' cwd < "$tmp"
+	[ "$cwd" != "$PWD" ] && [ -d "$cwd" ] && builtin cd -- "$cwd" || builtin true
+	command rm -f -- "$tmp"
+}
+# yazi end
