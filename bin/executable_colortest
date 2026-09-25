@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+# ~/bin/colortest — save, chmod +x, run
+
+echo "ANSI foreground (color0–15)"
+for i in {0..15}; do
+  printf "\e[38;5;%dm color%-2d \e[0m" $i $i
+  (( (i+1) % 8 == 0 )) && echo
+done
+
+echo -e "\nANSI background"
+for i in {0..15}; do
+  printf "\e[48;5;%dm  %-2d   \e[0m" $i $i
+  (( (i+1) % 8 == 0 )) && echo
+done
+
+echo -e "\nTruecolor ramp (ash → blood)"
+for i in {0..76}; do
+  printf "\e[48;2;%d;%d;%dm \e[0m" $((10+183*i/76)) $((8+10*i/76)) $((7+24*i/76))
+done
+echo
+
+echo -e "\nStyles"
+printf '\e[1mbold\e[0m  \e[2mdim\e[0m  \e[3mitalic\e[0m  \e[4munderline\e[0m  \e[9mstrike\e[0m  \e[7mreverse\e[0m\n'
+
+echo -e "\nRunes (font fallback check)"
+echo "ᚠ ᚢ ᚦ ᚨ ᚱ ᚲ ᚷ ᚹ ᚺ ᚾ ᛁ ᛇ ᛉ ᛚ ᛜ ᛞ ᛟ"

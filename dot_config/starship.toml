@@ -1,0 +1,178 @@
+# ᚺ  Hagalaz — starship prompt
+# Ash-black, bone, iron and blood. Sharp corners, heavy iron frame, runes for glyphs.
+#
+#   ┏━ ᛟ ~/code/crypt ━ ᛉ main !2 ━ ᚲ py 3.12.3
+#   ┗━ᚺ
+#
+# Runes used (all in the Unicode Runic block, U+16A0–16FF):
+#   ᚺ Hagalaz  prompt / the theme itself      ᛟ Othala  directory (homeland)
+#   ᛉ Algiz    git branch (antler / branch)   ᚲ Kenaz   language toolchains (the torch)
+#   ᚦ Thurisaz error / thorn                  ᚾ Nauthiz command duration (need, delay)
+#   ᛞ Dagaz    clock                          ᛁ Isa     read-only dir / vi normal mode (ice)
+#   ᛚ Laguz    docker (water)                 ᛇ Eihwaz  background jobs (endurance)
+#   ᛜ Ingwaz   user / ssh session
+
+"$schema" = 'https://starship.rs/config-schema.json'
+
+add_newline = true
+palette = "hagalaz"
+
+format = """
+[┏━](fg:dried)\
+$username\
+$hostname\
+$directory\
+$git_branch\
+$git_status\
+$jobs\
+$status\
+$python\
+$nodejs\
+$rust\
+$golang\
+$c\
+$java\
+$lua\
+$php\
+$docker_context\
+$line_break\
+$character"""
+
+# Duration + clock sit on the input line (zsh RPROMPT)
+right_format = "$cmd_duration$time"
+
+[palettes.hagalaz]
+ash    = "#0a0807"   # background
+soot   = "#14100e"
+iron   = "#2e2724"
+muted  = "#6b635c"
+bone   = "#d5cbbb"   # foreground
+blood  = "#c1121f"   # accent
+dried  = "#5a0d10"   # accent tail (frame lines)
+urgent = "#d4474d"   # errors
+gold   = "#a8956a"   # torchlight
+sage   = "#7d8a68"
+steel  = "#6f7f8c"
+mauve  = "#8c6a76"
+teal   = "#6f8c88"
+
+# ── Identity (only shown for root or over SSH) ──────────────────────────────
+[username]
+show_always = false
+style_user  = "fg:sage"
+style_root  = "bold fg:blood"
+format      = '[ ᛜ $user]($style)'
+
+[hostname]
+ssh_only = true
+style    = "fg:sage"
+format   = '[@$hostname]($style)'
+
+# ── Location ────────────────────────────────────────────────────────────────
+[directory]
+style             = "bold fg:bone"
+read_only         = " ᛁ"
+read_only_style   = "fg:urgent"
+truncation_length = 3
+truncation_symbol = "…/"
+format            = '[ ᛟ ](fg:blood)[$path]($style)[$read_only]($read_only_style)'
+
+# ── Git ─────────────────────────────────────────────────────────────────────
+[git_branch]
+symbol = "ᛉ "
+style  = "fg:mauve"
+format = '[ ━ ](fg:dried)[$symbol$branch]($style)'
+
+[git_status]
+style      = "bold fg:urgent"
+conflicted = "✖"
+ahead      = "⇡${count}"
+behind     = "⇣${count}"
+diverged   = "⇕⇡${ahead_count}⇣${behind_count}"
+untracked  = "?"
+stashed    = "≡"
+modified   = "!"
+staged     = "+"
+renamed    = "»"
+deleted    = "✘"
+format     = '( [$all_status$ahead_behind]($style))'
+
+# ── Shell state ─────────────────────────────────────────────────────────────
+[jobs]
+symbol           = "ᛇ "
+number_threshold = 1
+style            = "fg:teal"
+format           = '[ ━ ](fg:dried)[$symbol$number]($style)'
+
+[status]
+disabled = false
+style    = "bold fg:urgent"
+format   = '[ ━ ](fg:dried)[ᚦ $status]($style)'
+
+[cmd_duration]
+min_time = 2000
+style    = "fg:gold"
+format   = '[ ᚾ $duration]($style)'
+
+[time]
+disabled    = false
+time_format = "%H:%M"
+style       = "fg:muted"
+format      = '[ ᛞ $time]($style)'
+
+# ── Toolchains — all lit by the same torch (ᚲ Kenaz) ────────────────────────
+[python]
+symbol = "ᚲ py "
+style  = "fg:gold"
+format = '[ ━ ](fg:dried)[$symbol$version( \($virtualenv\))]($style)'
+
+[nodejs]
+symbol = "ᚲ node "
+style  = "fg:gold"
+format = '[ ━ ](fg:dried)[$symbol$version]($style)'
+
+[rust]
+symbol = "ᚲ rs "
+style  = "fg:gold"
+format = '[ ━ ](fg:dried)[$symbol$version]($style)'
+
+[golang]
+symbol = "ᚲ go "
+style  = "fg:gold"
+format = '[ ━ ](fg:dried)[$symbol$version]($style)'
+
+[c]
+symbol = "ᚲ c "
+style  = "fg:gold"
+format = '[ ━ ](fg:dried)[$symbol$version]($style)'
+
+[java]
+symbol = "ᚲ java "
+style  = "fg:gold"
+format = '[ ━ ](fg:dried)[$symbol$version]($style)'
+
+[lua]
+symbol = "ᚲ lua "
+style  = "fg:gold"
+format = '[ ━ ](fg:dried)[$symbol$version]($style)'
+
+[php]
+symbol = "ᚲ php "
+style  = "fg:gold"
+format = '[ ━ ](fg:dried)[$symbol$version]($style)'
+
+[docker_context]
+symbol = "ᛚ "
+style  = "fg:steel"
+format = '[ ━ ](fg:dried)[$symbol$context]($style)'
+
+# Quiet the noise
+[package]
+disabled = true
+
+# ── The prompt itself ───────────────────────────────────────────────────────
+[character]
+success_symbol            = '[┗━ᚺ ](bold fg:blood)'
+error_symbol              = '[┗━](fg:blood)[ᚦ ](bold fg:urgent)'
+vimcmd_symbol             = '[┗━](fg:blood)[ᛁ ](bold fg:muted)'
+vimcmd_visual_symbol      = '[┗━](fg:blood)[ᛁ ](bold fg:gold)'
