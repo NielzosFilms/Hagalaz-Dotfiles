@@ -163,8 +163,6 @@ packages:
     - zbar
     - zoxide
     - zram-generator
-  game-pc:
-    
   msi-laptop:
     - brightnessctl
     - intel-media-driver
@@ -177,6 +175,4 @@ packages:
     - tzupdate
     - vpl-gpu-rt
     - vulkan-intel
-  aur:
-    base:
 
