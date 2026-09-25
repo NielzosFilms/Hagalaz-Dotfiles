@@ -1,0 +1,41 @@
+# Hagalaz: dark fantasy theme for Omarchy (blood red, near-monochrome terminal)
+# Goes in ~/.config/omarchy/themes/hagalaz/colors.toml
+
+mode = "dark"
+
+accent    = "#c1121f"   # blood red
+selection = "#2e2724"   # iron
+muted     = "#6b635c"   # comments, placeholders
+
+# neutral ramp, darkest to lightest
+darker_background  = "#040302"
+dark_background    = "#070605"
+background         = "#0a0807"   # ash black
+lighter_background = "#14100e"   # soot
+
+dark_foreground   = "#867d73"
+foreground        = "#d5cbbb"   # bone
+light_foreground  = "#e3dacb"
+bright_foreground = "#efe8dc"
+
+# window borders (Omarchy 4 reads these; Omarchy 3.x uses the theme's hyprland.conf instead)
+hyprland_active_border   = "rgba(c1121fff) rgba(5a0d10ff) 45deg"   # blood to dried blood
+hyprland_inactive_border = "rgba(2e2724ff)"                         # iron
+
+# terminal colors: desaturated, only red keeps real punch
+color0  = "#0a0807"
+color1  = "#b8323a"   # muted blood red, also used for urgent notifications
+color2  = "#7d8a68"   # sage
+color3  = "#a8956a"   # dusty gold
+color4  = "#6f7f8c"   # grey-blue
+color5  = "#8c6a76"   # dusty mauve
+color6  = "#6f8c88"   # muted teal
+color7  = "#c4bcae"
+color8  = "#6b635c"   # same as muted
+color9  = "#d4474d"
+color10 = "#9aa886"
+color11 = "#c9b98a"
+color12 = "#8fa0ae"
+color13 = "#ad8b97"
+color14 = "#8fadaa"
+color15 = "#efe8dc"

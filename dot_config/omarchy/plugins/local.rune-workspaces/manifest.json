@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "id": "local.rune-workspaces",
+  "name": "Rune workspaces",
+  "version": "1.0.0",
+  "author": "you",
+  "description": "Workspace indicator using Elder Futhark runes",
+  "kinds": ["bar-widget"],
+  "entryPoints": { "barWidget": "Widget.qml" },
+  "barWidget": { "defaultSection": "left" }
+}
