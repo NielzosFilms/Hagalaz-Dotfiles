@@ -1,0 +1,12 @@
+#!/bin/bash
+# ~/.local/share/chezmoi/run_onchange_after_install-firefox-theme.sh.tmpl
+# hash of the two CSS files below forces re-run when they change:
+# {{ include "private_dot_local/share/hagalaz-firefox/userChrome.css" | sha256sum }}
+# {{ include "private_dot_local/share/hagalaz-firefox/userContent.css" | sha256sum }}
+
+set -eu
+PROFILE=$(awk -F= '/^Path=/{print $2; exit}' "$HOME/.mozilla/firefox/profiles.ini")
+CHROME_DIR="$HOME/.mozilla/firefox/$PROFILE/chrome"
+mkdir -p "$CHROME_DIR"
+ln -sf "$HOME/.local/share/hagalaz-firefox/userChrome.css" "$CHROME_DIR/userChrome.css"
+ln -sf "$HOME/.local/share/hagalaz-firefox/userContent.css" "$CHROME_DIR/userContent.css"

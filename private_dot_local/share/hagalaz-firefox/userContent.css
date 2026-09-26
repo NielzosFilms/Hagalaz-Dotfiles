@@ -1,0 +1,27 @@
+/* ==========================================================================
+   Hagalaz — Firefox userContent.css
+   Styles the browser's own pages (about:blank, about:newtab if not replaced,
+   scrollbars, find bar) to match the theme.
+   Place in: <profile>/chrome/userContent.css
+   ========================================================================== */
+
+@-moz-document url-prefix("about:") {
+  :root {
+    --hg-bg: #0a0807;
+    --hg-fg: #d5cbbb;
+    --hg-accent: #c1121f;
+    scrollbar-color: #2e2724 #0a0807 !important;
+  }
+  body {
+    background-color: var(--hg-bg) !important;
+    color: var(--hg-fg) !important;
+    font-family: "JetBrainsMono Nerd Font", monospace !important;
+  }
+  a { color: var(--hg-accent) !important; }
+}
+
+/* Global scrollbar theming on every page, not just about: pages */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #2e2724 #0a0807;
+}
