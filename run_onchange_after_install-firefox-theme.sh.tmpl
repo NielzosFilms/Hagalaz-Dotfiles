@@ -5,8 +5,8 @@
 # {{ include "private_dot_local/share/hagalaz-firefox/userContent.css" | sha256sum }}
 
 set -eu
-PROFILE=$(awk -F= '/^Path=/{print $2; exit}' "$HOME/.mozilla/firefox/profiles.ini")
-CHROME_DIR="$HOME/.mozilla/firefox/$PROFILE/chrome"
+PROFILE=$(awk -F= '/^Path=/{print $2; exit}' "$HOME/.config/mozilla/firefox/profiles.ini")
+CHROME_DIR="$HOME/.config/mozilla/firefox/$PROFILE/chrome"
 mkdir -p "$CHROME_DIR"
 ln -sf "$HOME/.local/share/hagalaz-firefox/userChrome.css" "$CHROME_DIR/userChrome.css"
 ln -sf "$HOME/.local/share/hagalaz-firefox/userContent.css" "$CHROME_DIR/userContent.css"
