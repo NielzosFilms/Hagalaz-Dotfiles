@@ -1,100 +1,45 @@
-/* ==========================================================================
-   Hagalaz — Firefox userChrome.css
-   Dark fantasy / evil-castle theme, matched to the Omarchy Hagalaz palette.
-   Place in: <profile>/chrome/userChrome.css
-   Requires: toolkit.legacyUserProfileCustomizations.stylesheets = true
-   ========================================================================== */
+/* Hagalaz — minimal: just remove rounded corners from Firefox chrome */
 
-:root {
-  --hg-bg: #0a0807;          /* ash black */
-  --hg-bg-darker: #040302;
-  --hg-bg-soot: #14100e;     /* bars */
-  --hg-border: #2e2724;      /* iron */
-  --hg-muted: #6b635c;
-  --hg-fg: #d5cbbb;          /* bone */
-  --hg-fg-bright: #efe8dc;
-  --hg-accent: #c1121f;      /* blood red */
-  --hg-accent-tail: #5a0d10; /* dried blood */
-
-  /* Font stack — swap in whatever you have installed.
-     Cinzel / IM Fell English work well for a cathedral feel on headings;
-     a monospace keeps the URL bar/tabs legible. */
-  --hg-font-ui: "JetBrainsMono Nerd Font", "Cascadia Code", monospace;
-}
-
-/* Whole browser chrome background */
 #navigator-toolbox,
-#titlebar,
 #TabsToolbar,
 #nav-bar,
-#PersonalToolbar {
-  background-color: var(--hg-bg) !important;
-  background-image: none !important;
-  color: var(--hg-fg) !important;
-  font-family: var(--hg-font-ui) !important;
-  border-radius: 0 !important; /* sharp corners, no rounding, matches WM */
-}
-
-/* Thick iron frame around the whole chrome, blood-red bottom seam */
-#navigator-toolbox {
-  border: 3px solid var(--hg-border) !important;
-  border-bottom: 3px solid var(--hg-accent-tail) !important;
-}
-
-/* Tabs */
-.tabbrowser-tab {
-  border-radius: 0 !important;
-  font-family: var(--hg-font-ui) !important;
-  color: var(--hg-muted) !important;
-}
-.tabbrowser-tab[selected="true"] {
-  background-color: var(--hg-bg-soot) !important;
-  color: var(--hg-fg-bright) !important;
-  box-shadow: inset 0 -3px 0 0 var(--hg-accent) !important; /* red underline, no glow/rounding */
-}
-.tab-line {
-  background: var(--hg-accent) !important;
-  height: 3px !important;
-}
-
-/* URL bar — thick iron border, sharp corners, red focus ring instead of blue */
-#urlbar-background {
-  background-color: var(--hg-bg-soot) !important;
-  border: 3px solid var(--hg-border) !important;
-  border-radius: 0 !important;
-}
-#urlbar[focused="true"] #urlbar-background {
-  border-color: var(--hg-accent) !important;
-  box-shadow: none !important; /* kill Firefox's default glow, keep it flat/sharp */
-}
-#urlbar,
-#urlbar input {
-  color: var(--hg-fg) !important;
-  font-family: var(--hg-font-ui) !important;
-}
-
-/* Toolbar buttons */
-toolbarbutton {
-  border-radius: 0 !important;
-  color: var(--hg-fg) !important;
-}
-toolbarbutton:hover {
-  background-color: var(--hg-border) !important;
-}
-
-/* Sidebar (bookmarks/history) */
-#sidebar-box {
-  background-color: var(--hg-bg) !important;
-  color: var(--hg-fg) !important;
-  border-right: 3px solid var(--hg-border) !important;
-}
-
-/* Autocomplete / urlbar results popup */
+#PersonalToolbar,
+.tabbrowser-tab,
+#urlbar-background,
+toolbarbutton,
 .urlbarView {
-  background-color: var(--hg-bg-soot) !important;
-  border: 3px solid var(--hg-border) !important;
   border-radius: 0 !important;
 }
-.urlbarView-row[selected] {
-  background-color: var(--hg-border) !important;
+
+/* Vertical tabs — the highlight lives on .tab-background, not the tab row */
+#vertical-tabs-container .tabbrowser-tab,
+#vertical-tabs-container .tab-background,
+.tabbrowser-tab[selected] .tab-background {
+  border-radius: 0 !important;
+}
+.tabbrowser-tab[selected] .tab-background {
+  border: 3px solid #5a0d10 !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+/* pinned tabs border radius */
+.tabbrowser-tab[pinned] .tab-background {
+  border-radius: 0 !important;
+}
+
+/* toolbar buttons */
+toolbarbutton stack,
+toolbarbutton image {
+  border-radius: 0 !important;
+}
+
+/* search bar / url bar */
+.urlbar-backgroupd,
+.urlbar[breakout-extend] {
+  border: 3px solid #5a0d10 !important;
+}
+.urlbar-background,
+.urlbar-input-container {
+  border-radius: 0 !important;
 }

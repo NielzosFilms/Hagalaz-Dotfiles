@@ -4,7 +4,7 @@
    scrollbars, find bar) to match the theme.
    Place in: <profile>/chrome/userContent.css
    ========================================================================== */
-
+/*
 @-moz-document url-prefix("about:") {
   :root {
     --hg-bg: #0a0807;
@@ -19,9 +19,12 @@
   }
   a { color: var(--hg-accent) !important; }
 }
+*/
 
 /* Global scrollbar theming on every page, not just about: pages */
+/*
 * {
   scrollbar-width: thin;
   scrollbar-color: #2e2724 #0a0807;
 }
+*/
