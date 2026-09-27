@@ -1,0 +1,21 @@
+{
+  "manifest_version": 2,
+  "version": "1.0",
+  "name": "Hagalaz",
+  "theme": {
+    "images": {},
+    "properties": {},
+    "colors": {
+      "toolbar": "rgb(10, 8, 7)",
+      "toolbar_text": "rgb(193, 18, 31)",
+      "frame": "rgb(10, 8, 7)",
+      "tab_background_text": "rgb(213, 203, 187)",
+      "toolbar_field": "rgb(20, 16, 14)",
+      "toolbar_field_text": "rgb(193, 18, 31)",
+      "tab_line": "rgb(193, 18, 31)",
+      "popup": "rgb(10, 8, 7)",
+      "popup_text": "rgb(213, 203, 187)",
+      "tab_loading": "rgb(193, 18, 31)"
+    }
+  }
+}
