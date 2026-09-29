@@ -1,0 +1,64 @@
+#!/usr/bin/env bash
+# Usage: dev-action "Label" command [args...]
+label="$1"; shift
+
+# Hagalaz palette
+c() { printf '\e[38;2;%sm' "$1"; }
+RED=$(c "193;18;31")      # #c1121f blood
+DRIED=$(c "90;13;16")     # #5a0d10 dried blood
+BONE=$(c "213;203;187")   # #d5cbbb
+GOLD=$(c "168;149;106")   # #a8956a
+IRON=$(c "107;99;92")     # #6b635c
+BOLD=$'\e[1m'; RST=$'\e[0m'
+
+RUNES=(ᚠ ᚢ ᚦ ᚨ ᚱ ᚲ ᚷ ᚹ ᚺ ᚾ)
+rune_line() {
+  local n=${1:-24} out="" i
+  for ((i = 0; i < n; i++)); do out+="${RUNES[i % 10]} "; done
+  printf '%s%s%s\n' "$IRON" "$out" "$RST"
+}
+
+ICONS="$HOME/.local/share/hagalaz/icons"
+
+start_lines=("The forge is lit" "The ritual begins" "The crows gather" "The bell tolls" "Ash stirs in the dark")
+win_lines=("The ritual is complete" "It is done" "The dark is satisfied" "The seal holds")
+fail_lines=("The ritual has failed" "The seal is broken" "Blood on the stones" "The crows are silent")
+pick() { local -n a=$1; printf '%s' "${a[RANDOM % ${#a[@]}]}"; }
+
+# Opening
+clear
+echo
+rune_line 20
+printf '\n  %s%sᚺ  %s%s\n' "$BOLD" "$RED" "${label^^}" "$RST"
+printf '  %s%s…%s\n\n' "$DRIED" "$(pick start_lines)" "$RST"
+rune_line 20
+echo
+
+notify-send -a Hagalaz -i "$ICONS/start.svg" "ᚺ  $label" "$(pick start_lines)…"
+
+# Run (output streams live)
+SECONDS=0
+"$@"
+code=$?
+took=$SECONDS
+
+# Result
+echo
+rune_line 20
+if ((code == 0)); then
+  printf '\n  %s%s✦ %s%s\n' "$BOLD" "$GOLD" "$(pick win_lines)" "$RST"
+  printf '  %s%s finished in %ss%s\n' "$BONE" "$label" "$took" "$RST"
+  notify-send -a Hagalaz -i "$ICONS/win.svg" "ᚺ  $label" "$(pick win_lines) (${took}s)"
+else
+  printf '\n  %s%s✘ %s%s\n' "$BOLD" "$RED" "$(pick fail_lines)" "$RST"
+  printf '  %s%s exited with code %s after %ss%s\n' "$BONE" "$label" "$code" "$took" "$RST"
+  notify-send -a Hagalaz -u critical -i "$ICONS/fail.svg" "ᚺ  $label" "$(pick fail_lines) (exit $code)"
+fi
+printf '\n'
+rune_line 20
+echo
+
+printf '  %sPress any key to close…%s' "$IRON" "$RST"
+read -n 1 -s -r
+echo
+exit "$code"
