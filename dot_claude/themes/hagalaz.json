@@ -2,8 +2,7 @@
   "name": "hagalaz",
   "base": "dark-ansi",
   "overrides": {
-    "claude": "#c1121f",
-    "promptBorder": "#c1121f",
+    "promptBorder": "ansi:redBright",
     "diffAdded": "#1b1c16",
     "diffRemoved": "#240e0f",
     "diffAddedDimmed": "#13120f",
