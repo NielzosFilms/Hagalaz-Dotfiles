@@ -1,0 +1,81 @@
+# Hagalaz ᚺ — lazygit theme
+# Destination: ~/.config/lazygit/config.yml
+# Palette: ash black, bone, iron, blood red. Red is the only color with full punch.
+
+gui:
+  theme:
+    # Focused panel: blood red. Everything else recedes into iron.
+    activeBorderColor:
+      - '#c1121f'
+      - bold
+    inactiveBorderColor:
+      - '#2e2724'
+    searchingActiveBorderColor:
+      - '#a8956a' # dusty gold
+      - bold
+    optionsTextColor:
+      - '#867d73' # dark foreground
+    selectedLineBgColor:
+      - '#2e2724' # iron
+    inactiveViewSelectedLineBgColor:
+      - '#14100e' # soot
+    cherryPickedCommitFgColor:
+      - '#d5cbbb'
+    cherryPickedCommitBgColor:
+      - '#5a0d10' # dried blood
+    markedBaseCommitFgColor:
+      - '#a8956a'
+    markedBaseCommitBgColor:
+      - '#2e2724'
+    unstagedChangesColor:
+      - '#b8323a' # muted blood red
+    defaultFgColor:
+      - '#d5cbbb' # bone
+  # Sharp corners, like the Hyprland frames (rounding = 0)
+  border: single
+  # Author names in dusty mauve, except you, in bone
+  authorColors:
+    '*': '#8c6a76'
+  # Branches: main lines burn red, the rest stay near-monochrome
+  branchColorPatterns:
+    '^(main|master)$': '#c1121f'
+    '^(develop|dev)$': '#a8956a'
+    '^feature/': '#7d8a68'
+    '^(fix|hotfix|bugfix)/': '#d4474d'
+    '^release/': '#6f7f8c'
+  # Elder Futhark spinner, ending on Hagalaz itself.
+  # Needs a font with rune glyphs (e.g. Noto Sans Runic); remove this block if they render as boxes.
+  spinner:
+    frames: ['ᚠ', 'ᚢ', 'ᚦ', 'ᚨ', 'ᚱ', 'ᚲ', 'ᚷ', 'ᚹ', 'ᚺ', 'ᚾ']
+    rate: 120
+  nerdFontsVersion: '3'
+  showRandomTip: false
+  showBottomLine: true
+  showCommandLog: false
+  commitHashLength: 8
+  filterMode: 'fuzzy'
+  screenMode: 'normal'
+git:
+  diffRenderers:
+    - colorArg: always
+      # Uncomment if you use delta; see the matching delta theme below.
+      # pager: delta --dark --paging=never
+
+      type: rawGit
+
+# --- Optional: delta theme matching the palette ---
+# Add to ~/.gitconfig:
+#
+# [delta]
+#     minus-style                   = syntax "#2a0d0f"
+#     minus-emph-style              = syntax "#5a0d10"
+#     plus-style                    = syntax "#161a12"
+#     plus-emph-style               = syntax "#3a4430"
+#     line-numbers                  = true
+#     line-numbers-minus-style      = "#b8323a"
+#     line-numbers-plus-style       = "#7d8a68"
+#     line-numbers-zero-style       = "#6b635c"
+#     file-style                    = "#d5cbbb" bold
+#     file-decoration-style         = "#c1121f" ul
+#     hunk-header-style             = file line-number syntax
+#     hunk-header-decoration-style  = "#2e2724" box
