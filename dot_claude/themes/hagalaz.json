@@ -1,0 +1,20 @@
+{
+  "name": "hagalaz",
+  "base": "dark-ansi",
+  "overrides": {
+    "claude": "#c1121f",
+    "promptBorder": "#c1121f",
+    "diffAdded": "#1b1c16",
+    "diffRemoved": "#240e0f",
+    "diffAddedDimmed": "#13120f",
+    "diffRemovedDimmed": "#180b0b",
+    "diffAddedWord": "#2f3226",
+    "diffRemovedWord": "#5a0d10",
+    "userMessageBackground": "#14100e",
+    "userMessageBackgroundHover": "#1c1714",
+    "bashMessageBackgroundColor": "#14100e",
+    "memoryBackgroundColor": "#14100e",
+    "composerSidebarBackground": "#14100e",
+    "selectionBg": "#2e2724"
+  }
+}
