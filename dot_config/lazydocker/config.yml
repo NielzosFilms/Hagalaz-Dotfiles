@@ -1,0 +1,22 @@
+# Hagalaz — lazydocker theme
+# Destination: ~/.config/lazydocker/config.yml
+# Hex colors need a truecolor terminal (Alacritty, Ghostty, kitty, etc. all fine).
+
+gui:
+  # Sharp corners to match rounding = 0 in the Hyprland frame
+  border: single
+
+  theme:
+    # Focused panel: blood red
+    activeBorderColor:
+      - '#c1121f'
+      - bold
+    # Unfocused panels: iron
+    inactiveBorderColor:
+      - '#2e2724'
+    # Highlighted row: iron background
+    selectedLineBgColor:
+      - '#2e2724'
+    # Keybinding hints in the bottom bar: dark foreground
+    optionsTextColor:
+      - '#867d73'
