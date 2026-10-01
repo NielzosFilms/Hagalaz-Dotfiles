@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "id": "local.hagalaz-pomodoro",
+  "name": "Hagalaz pomodoro",
+  "version": "1.0.0",
+  "author": "niels",
+  "license": "MIT",
+  "description": "Candle focus timer",
+  "kinds": ["bar-widget"],
+  "entryPoints": { "barWidget": "BarWidget.qml" },
+  "barWidget": {
+    "displayName": "Pomodoro",
+    "description": "Left = start, right = pause/resume, middle = reset",
+    "category": "Productivity",
+    "defaultSection": "center",
+    "allowMultiple": false
+  }
+}

@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# run_onchange_after_install-aur-packages.sh.tmpl
+# "after" so pacman (incl. yay, base-devel) has already run.
+# AUR packages that pacman can't install (see packages.aur).
+# packages-hash: {{ .packages.aur | toJson | sha256sum }}
+
+set -euo pipefail
+
+AUR_PKGS="{{ .packages.aur | join " " }}"
+
+if ! command -v yay >/dev/null 2>&1; then
+  echo "yay not found; install these AUR packages manually: $AUR_PKGS" >&2
+  exit 0
+fi
+
+yay -S --needed --noconfirm $AUR_PKGS

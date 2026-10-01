@@ -109,24 +109,42 @@ Everything below was authored over the course of this conversation. Locations as
 | `yazi-theme.toml.tpl` | `~/.config/omarchy/themed/` | Same theme as an Omarchy template (`{{ accent }}`, `{{ color3 }}`, etc.) so it regenerates automatically on `omarchy-theme-set`, instead of needing manual edits when the palette changes. Requires symlinking Yazi's `theme.toml` to Omarchy's generated per-theme output — exact current-theme path differs by Omarchy version, wasn't confirmed on the user's machine. |
  
 ### Top bar (Omarchy 4 shell, Quickshell/QML)
- 
-The user is on Omarchy 4, which uses its own Quickshell-based shell (not Waybar). Bar contents live in `~/.config/omarchy/shell.json` under the `bar` key; once customized, that file is the sole source (no merge with defaults).
- 
-| File | Destination | Purpose |
-|---|---|---|
-| `hagalaz-bar.json` | consumed by `apply-bar.sh`, merged into `~/.config/omarchy/shell.json`'s `bar` key | Bar layout: left = menu/skull button + workspaces; center = media + clock (`ddd d MMM  HH:mm` format); right = CPU, memory, update, indicators, tray, network, bluetooth, audio, power. |
-| `hagalaz-cpu` | `~/.config/omarchy/bar/scripts/hagalaz-cpu` | Shell script polling `/proc/stat` over 0.5s to print `cpu NN%`. Tested and working in isolation. |
-| `hagalaz-mem` | `~/.config/omarchy/bar/scripts/hagalaz-mem` | Shell script using `free` to print `mem NN%` (used - available). Tested and working in isolation. |
-| `apply-bar.sh` | run manually | Backs up `shell.json` (once, kept across re-runs), installs the two scripts, merges the `hagalaz-bar.json` layout into `bar`, reloads the shell via `omarchy-shell shell reloadConfig`. Dry-run tested against a mocked `omarchy-shell`/`jq`. |
- 
+
+The user is on Omarchy 4, which uses its own Quickshell-based shell (not Waybar). Bar contents live in `~/.config/omarchy/shell.json` under the `bar` key; once customized, that file is the sole source (no merge with defaults). The file is `private_` in chezmoi (mode 600).
+
+Bar position is **top** (solid background). Layout ("Throne"):
+
+- **left:** `local.rune-workspaces`, `niels.media`
+- **center** (`centerAnchor: niels.clock`, mirrored): `omarchy.indicators` (hidden unless active or hovered), `local.hagalaz-moon`, `niels.clock` (`HH:mm`, right-click cycles to `ddd d MMM 'W'ww`), `local.hagalaz-pomodoro`
+- **right:** `omarchy.tray`, `local.hagalaz-sysmon`, `omarchy.agents`, `omarchy.bluetooth`, `omarchy.network`, `omarchy.audio`, `omarchy.microphone`, `omarchy.monitor`, `omarchy.power`
+
+`omarchy.keyboard-layout` and `omarchy.system-update` were removed on purpose.
+
+**Theme tokens:** `themes/hagalaz/shell.toml` is a static copy of the generated shell.toml with these overrides: ash-black bar (`#0a0807`, same as apps; soot was tried and looked too light), blood `active`, bar height 30, iron hover/focus borders, red selected state, 2px blood-gradient popup and notification borders, and iron-framed tooltips. Re-apply with `omarchy theme set hagalaz` after editing.
+
+**Font:** Grenze Gotisch (AUR `otf-grenze-gotisch`, listed under `packages.aur` and installed by `run_onchange_after_install-aur-packages.sh.tmpl` via yay). It's used for the clock label (15px), media titles (bar + popup), the sysmon bar label and popup headings, and the pomodoro countdown. The system mono font stays JetBrainsMono Nerd Font. Restart the shell (`omarchy restart shell`) after installing a font, because Qt only reads the font list at startup. Grenze defaults to **old-style numerals** (3/4/5/7/9 drop below the baseline), so every numeric Grenze label sets `font.features: { "lnum": 1, "tnum": 1 }`. `WidgetButton` can't pass features through, so those widgets hide its label (`labelVisible: false`) and draw their own `Text`.
+
+| Plugin | Purpose |
+|---|---|
+| `niels.clock` | `omarchy plugin clone omarchy.clock`; the bar label uses Grenze Gotisch, `moduleName` is fixed to `niels.clock`, and the IPC target stays `omarchy.clock`. |
+| `niels.media` | Clone of `omarchy.media`. Four organ pipes replace play/pause. While playing they show **live audio levels from cava** in blood red (`cava.conf`: 4 bars, 20fps, PipeWire, raw ascii to stdout, read with a `SplitParser`). When paused they lie low in the normal text color. cava runs only while something plays. If cava is missing, the pipes fall back to a slow decorative loop. Measured cost: about 6% shell CPU plus 1–2% for cava while playing, about 0% otherwise. Avoid `Behavior` animations on values that update every second (like the progress line): they keep the bar redrawing at 60fps. The bar shows the Grenze title, a red ᛫, and the dimmed artist, with a 2px blood progress line underneath (MPRIS position is polled every second). The popup has iron-framed cover art, a click-to-seek blood scrubber with timestamps, and a red pause button while playing. The popup also has a **24-pipe organ-facade visualizer** (`cava-popup.conf`: stereo, 30fps, halves reversed so the bass stands in the centre). The pipes sit in iron outlines that rise toward the middle and have a dark mouth notch. Only one cava runs at a time: the popup cava runs only while the popup is open and music plays, and it also feeds the bar pipes. Measured with the popup open: about 4% shell CPU, under 1% for cava, 14 MB. It adds `open()`/`opened` so `omarchy-shell shell summon niels.media` works. The marquee cap is 280px. The marquee is restarted explicitly on title, artist, width or popup changes, with `x` reset to 0 each time. This fixes an upstream bug where a stopped animation left the label offset, showing a blank gap and a clipped first word after a track change. It still uses the first-party `omarchy.media` service. |
+| `local.hagalaz-sysmon` | Bar shows `ᛋ NN%  ᛗ NN%` (Sowilo/Mannaz; Kaunan ᚲ was too small) in Grenze, with a fixed width because Grenze digits are proportional, red past 85% CPU / 90% mem. Left click opens a popup (CPU per-core grid, temp, load; RAM/swap; NVIDIA util/temp/VRAM/power; disk + NVMe temp; top 5 processes; uptime). Right click opens btop. Data comes from the `stats` Python script (`--brief` for the bar). It finds the NVIDIA GPU by PCI vendor/class (no hardcoded address) and the CPU temperature from coretemp, then k10temp, zenpower, then acpitz, so it works on other machines. It doesn't call `nvidia-smi` while the dGPU is runtime-suspended, so polling doesn't wake it. |
+| `local.hagalaz-moon` | Lunar phase computed locally (Nerd Font `nf-md-moon_*`); the tooltip shows % lit and the next full/new moon. |
+| `local.hagalaz-pomodoro` | Candle timer: left = start/skip, right = pause, middle = reset; `workMinutes`/`breakMinutes` set inline in shell.json; sends a `notify-send` when a phase ends; the break is shown in dusty gold. |
+
+Third-party widgets receive a `PluginBarApi` instead of the full bar. It has `run`, `foreground`, `urgent`, `fontFamily`, tooltips and popouts, but **no `shellQuote`**, so use `Util.shellQuote` from `qs.Commons`.
+
+**Other machines (`chezmoi update`):** the files land as-is, then these scripts run in order:
+1. `run_onchange_install-packages.sh.tmpl`: pacman packages, including `cava`.
+2. `run_onchange_after_install-aur-packages.sh.tmpl`: `packages.aur` via yay.
+3. `run_onchange_after_reload-omarchy-shell.sh.tmpl`: re-runs `omarchy theme set hagalaz` (if Hagalaz is the current theme) so the theme's `shell.toml` takes effect, then restarts the shell for the fonts and plugin code. It re-runs whenever the theme, the bar layout, any bar plugin file or the AUR list changes. Without a graphical session it prints what to run after logging in.
+
+If Hagalaz isn't the active theme on that machine, run `omarchy theme set hagalaz` once.
+
 ### Rune workspace widget
- 
-A custom plugin, `local.rune-workspaces`, replaces the built-in `omarchy.workspaces` in the bar. It relabels the ten workspace slots with the first ten Elder Futhark runes (ᚠᚢᚦᚨᚱᚲᚷᚹᚺᚾ — workspace 9 = ᚺ = Hagalaz itself) and underlines the focused one in blood red, keeping the same focus/click logic as the built-in widget.
- 
-Files: `rune-BarWidget.qml` and `rune-manifest.json` go in `~/.config/omarchy/plugins/local.rune-workspaces/`; `install-plugin.sh` installs, validates, enables, and wires it into the bar layout in place of `omarchy.workspaces`.
- 
-**Status: unconfirmed** — not yet verified rendering on screen. If picking this back up, next steps are checking `omarchy plugin validate` output and the shell logs (`qs log -p "$OMARCHY_PATH/shell" --tail 100`), and confirming whether `WidgetButton` supports a text-color property (source not yet seen).
- 
+
+A custom plugin, `local.rune-workspaces`, replaces the built-in `omarchy.workspaces` in the bar. It relabels the ten workspace slots with the first ten Elder Futhark runes (ᚠᚢᚦᚨᚱᚲᚷᚹᚺᚾ — workspace 9 = ᚺ = Hagalaz itself) and underlines the focused one in blood red. **Status: working** (glyphs render via Noto Sans Runic).
+
 ## Design reference (from the HTML mock-ups)
  
 Two full HTML/CSS/SVG preview pages were built earlier as mood boards before any real Omarchy files were written. They are not part of the theme's installed files, but capture the intended visual target:

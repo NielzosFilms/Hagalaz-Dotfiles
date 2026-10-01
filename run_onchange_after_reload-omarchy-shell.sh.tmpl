@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+# run_onchange_after_reload-omarchy-shell.sh.tmpl
+# Re-applies the Hagalaz theme (so themes/hagalaz/shell.toml reaches
+# ~/.local/state/omarchy/current/theme) and restarts the Omarchy shell (so
+# it sees new fonts and plugin code) whenever the theme, bar plugins, bar
+# layout or AUR fonts change.
+# theme:   {{ include "dot_config/omarchy/themes/hagalaz/shell.toml" | sha256sum }}
+# colors:  {{ include "dot_config/omarchy/themes/hagalaz/colors.toml" | sha256sum }}
+# layout:  {{ include "dot_config/omarchy/private_shell.json" | sha256sum }}
+# fonts:   {{ .packages.aur | toJson | sha256sum }}
+# plugins: {{ range (glob (joinPath .chezmoi.sourceDir "dot_config/omarchy/plugins/*/*")) }}{{ include . | sha256sum | trunc 12 }} {{ end }}
+
+set -u
+
+if ! command -v omarchy >/dev/null 2>&1; then
+  exit 0
+fi
+
+# Needs a running Hyprland session (skip over plain SSH/TTY).
+if [ -z "${WAYLAND_DISPLAY:-}" ] && [ -z "${HYPRLAND_INSTANCE_SIGNATURE:-}" ]; then
+  echo "No graphical session; run 'omarchy theme set hagalaz && omarchy restart shell' after logging in." >&2
+  exit 0
+fi
+
+current=$(cat "$HOME/.local/state/omarchy/current/theme.name" 2>/dev/null || true)
+if [ "$current" = "hagalaz" ]; then
+  omarchy theme set hagalaz || echo "omarchy theme set hagalaz failed" >&2
+fi
+
+# Qt only reads the font list at startup, so restart rather than hot-reload.
+omarchy restart shell >/dev/null 2>&1 || echo "omarchy restart shell failed" >&2
+exit 0

@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "id": "local.hagalaz-sysmon",
+  "name": "Hagalaz sysmon",
+  "version": "1.0.0",
+  "author": "niels",
+  "license": "MIT",
+  "description": "CPU and memory readout with a detailed system stats popup",
+  "kinds": ["bar-widget"],
+  "entryPoints": { "barWidget": "BarWidget.qml" },
+  "barWidget": {
+    "displayName": "Sysmon",
+    "description": "CPU/memory readout; click for CPU, memory, GPU, disk and process detail",
+    "category": "Info",
+    "defaultSection": "right",
+    "allowMultiple": false
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "id": "local.hagalaz-moon",
+  "name": "Hagalaz moon",
+  "version": "1.0.0",
+  "author": "niels",
+  "license": "MIT",
+  "description": "Current lunar phase glyph",
+  "kinds": ["bar-widget"],
+  "entryPoints": { "barWidget": "BarWidget.qml" },
+  "barWidget": {
+    "displayName": "Moon phase",
+    "description": "Current lunar phase; hover for illumination and the next full/new moon",
+    "category": "Info",
+    "defaultSection": "center",
+    "allowMultiple": false
+  }
+}

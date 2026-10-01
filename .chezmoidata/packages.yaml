@@ -14,6 +14,7 @@ packages:
     - bolt
     - btop
     - btrfs-progs
+    - cava
     - chromium
     - clang
     - cliamp
@@ -176,3 +177,6 @@ packages:
     - vpl-gpu-rt
     - vulkan-intel
 
+  # AUR-only packages, installed with yay by run_onchange_after_install-aur-packages.sh.tmpl
+  aur:
+    - otf-grenze-gotisch

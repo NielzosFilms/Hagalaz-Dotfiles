@@ -1,35 +1,40 @@
 {
   "bar": {
-    "centerAnchor": "omarchy.clock",
+    "centerAnchor": "niels.clock",
     "layout": {
+      "left": [
+        {
+          "id": "local.rune-workspaces"
+        },
+        {
+          "id": "niels.media"
+        }
+      ],
       "center": [
         {
           "id": "omarchy.indicators"
         },
         {
-          "format": "dddd HH:mm",
-          "formatAlt": "d MMMM 'W'ww yyyy",
-          "id": "omarchy.clock",
+          "id": "local.hagalaz-moon"
+        },
+        {
+          "id": "niels.clock",
+          "format": "HH:mm",
+          "formatAlt": "ddd d MMM 'W'ww",
           "verticalFormat": "HH\n—\nmm"
         },
         {
-          "id": "omarchy.keyboard-layout"
-        },
-        {
-          "id": "omarchy.media"
-        },
-        {
-          "id": "omarchy.system-update"
-        }
-      ],
-      "left": [
-        {
-          "id": "local.rune-workspaces"
+          "id": "local.hagalaz-pomodoro",
+          "workMinutes": 25,
+          "breakMinutes": 5
         }
       ],
       "right": [
         {
           "id": "omarchy.tray"
+        },
+        {
+          "id": "local.hagalaz-sysmon"
         },
         {
           "id": "omarchy.agents"
@@ -42,6 +47,9 @@
         },
         {
           "id": "omarchy.audio"
+        },
+        {
+          "id": "omarchy.microphone"
         },
         {
           "id": "omarchy.monitor"
@@ -59,5 +67,11 @@
     "screensaver": 150
   },
   "plugins": [],
-  "version": 1
+  "version": 1,
+  "disabledPlugins": [
+    "omarchy.media"
+  ],
+  "cloneSourceRestores": [
+    "niels.media"
+  ]
 }
