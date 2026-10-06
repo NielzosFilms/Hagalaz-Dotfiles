@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+# jarvis-up — reset the local Jarvis/NexEd dev state.
+# Run on boot or after a branch checkout.
+#
+#   jarvis-up           run inside dev-action (Hagalaz banner + notification)
+#   jarvis-up --plain   run directly, no banner/keypress
+#
+# JARVIS_DIR overrides the repo path (default: current jarvis checkout, else ~/Documents/jarvis)
+
+set -euo pipefail
+
+if [[ ${1:-} != --plain && -z ${JARVIS_UP_INNER:-} && -t 1 ]] && command -v dev-action >/dev/null; then
+  JARVIS_UP_INNER=1 exec dev-action "Raise Jarvis" "$0" "$@"
+fi
+
+if [[ -z ${JARVIS_DIR:-} ]]; then
+  top=$(git rev-parse --show-toplevel 2>/dev/null || true)
+  [[ -n $top && -f $top/dev-scripts/docker-new.sh ]] && JARVIS_DIR=$top || JARVIS_DIR=$HOME/Documents/jarvis
+fi
+cd "$JARVIS_DIR"
+
+# Hagalaz palette
+RED=$'\e[1;38;2;193;18;31m' BONE=$'\e[38;2;213;203;187m' RST=$'\e[0m'
+RUNES=(ᚠ ᚢ ᚦ)
+n=0
+step() { printf '\n%s%s %s%s%s\n\n' "$RED" "${RUNES[n++]}" "$BONE" "$1" "$RST"; }
+
+step "Raising the containers"
+./dev-scripts/docker-new.sh
+
+step "Feeding node"
+pnpm install
+
+step "Forging maven"
+mvn clean
+mvn -T1C generate-resources -Dktlint.skip=true
