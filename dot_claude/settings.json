@@ -1,4 +1,5 @@
 {
   "tui": "fullscreen",
-  "theme": "custom:hagalaz"
+  "theme": "custom:hagalaz",
+  "switchModelsOnFlag": false
 }

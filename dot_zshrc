@@ -19,7 +19,6 @@ plugins=(
     zsh-syntax-highlighting
     history-substring-search
     you-should-use
-    zsh-bat
     jump
 )
 
