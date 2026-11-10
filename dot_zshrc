@@ -74,7 +74,7 @@ alias ff='firefox'
 #alias c="while sleep 1;do tput sc;tput cup 0 $(($(tput cols)-29));date;tput rc;done &; clear"
 
 alias netprocs="lsof -P -i -n"
-alias up="sudo apt update && sudo apt upgrade -y && ~/scripts/update-all.sh"
+alias up="sudo pacman -Sy && yay -Syu && omarchy-update && ~/scripts/update-all.sh"
 # So that sudo doesnt override aliases (doesnt work with flags)
 # alias sudo='sudo '
 
@@ -100,10 +100,11 @@ alias gpnb='git push --set-upstream origin $(git branch | grep \* | cut -d ‚Äù ‚
 # LOCAL SERVERS
 alias serve='php -S localhost:8000'
 
+# Load secrets file if exists
+[[ -f ~/.config/secrets/env.zsh ]] && source ~/.config/secrets/env.zsh
+
 # Load Bit Academy rc file if exists
-if [ -f ~/.bit-academy-rc.sh ]; then
-    source ~/.bit-academy-rc.sh
-fi
+[[ -f ~/.bit-academy-rc.sh ]] && source ~/.bit-academy-rc.sh
 
 eval "$(starship init zsh)"
 
