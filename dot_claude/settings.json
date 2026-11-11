@@ -1,5 +1,8 @@
 {
   "tui": "fullscreen",
   "theme": "custom:hagalaz",
-  "switchModelsOnFlag": false
+  "switchModelsOnFlag": false,
+  "enabledPlugins": {
+    "frontend-design@anthropic-plugin-directory": true
+  }
 }

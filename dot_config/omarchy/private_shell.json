@@ -12,9 +12,6 @@
       ],
       "center": [
         {
-          "id": "omarchy.indicators"
-        },
-        {
           "id": "local.hagalaz-moon"
         },
         {
@@ -58,7 +55,11 @@
           "id": "omarchy.power"
         }
       ],
-      "centerBegin": [],
+      "centerBegin": [
+        {
+          "id": "omarchy.indicators"
+        }
+      ],
       "centerEnd": [],
       "tray": []
     },
