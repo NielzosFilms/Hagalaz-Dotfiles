@@ -133,3 +133,6 @@ function y() {
 	command rm -f -- "$tmp"
 }
 # yazi end
+
+# Load Angular CLI autocompletion.
+source <(ng completion script)

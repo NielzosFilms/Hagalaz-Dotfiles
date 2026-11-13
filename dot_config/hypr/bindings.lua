@@ -27,3 +27,7 @@
 -- o.bind("SUPER + SHIFT + S", nil, "omarchy-capture-screenshot")
 -- o.bind("SUPER + H", nil, "voxtype record toggle")
 -- o.bind("SUPER + PERIOD", nil, "omarchy-shell shell toggle omarchy.emojis")
+
+
+-- OBS save replay buffer clip
+o.bind("SUPER + F1", "OBS - Save replay buffer", "obs-cmd --websocket obsws://127.0.0.1:4455/RCKr8DFkp35pDwK1 replay save")
