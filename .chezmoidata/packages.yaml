@@ -115,7 +115,7 @@ packages:
     - pipewire-pulse
     - plocate
     - postgresql-libs
-    - power-profiles-daemon
+    - omarchy-power-profiles-daemon
     - python-gobject
     - python-poetry-core
     - qemu-user-static-binfmt
