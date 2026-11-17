@@ -1,0 +1,4 @@
+[Icon Theme]
+Name=Default
+Comment=Fallback cursor for apps that ignore XCURSOR_THEME
+Inherits=Skyrim

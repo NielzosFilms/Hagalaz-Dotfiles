@@ -180,3 +180,4 @@ packages:
   # AUR-only packages, installed with yay by run_onchange_after_install-aur-packages.sh.tmpl
   aur:
     - otf-grenze-gotisch
+    - skyrim-cursor-theme

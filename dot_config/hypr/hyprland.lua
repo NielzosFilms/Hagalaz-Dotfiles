@@ -27,3 +27,10 @@ require("default.hypr.toggles")
 
 -- Add any other personal Hyprland configuration below.
 -- o.window("qemu", { workspace = "5" })
+
+-- Cursor theme. When changing it, also run: gsettings set org.gnome.desktop.interface cursor-theme '<name>'
+-- and update Inherits= in ~/.local/share/icons/default/index.theme, plus gtk-cursor-theme-name/size
+-- in ~/.config/gtk-3.0/settings.ini and ~/.config/gtk-4.0/settings.ini (used by Spotify and other XWayland apps)
+hl.env("XCURSOR_THEME", "Skyrim")
+hl.env("XCURSOR_SIZE", "32")
+hl.env("HYPRCURSOR_SIZE", "32")
