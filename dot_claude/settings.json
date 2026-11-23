@@ -4,5 +4,6 @@
   "switchModelsOnFlag": false,
   "enabledPlugins": {
     "frontend-design@anthropic-plugin-directory": true
-  }
+  },
+  "cleanupPeriodDays": 7
 }

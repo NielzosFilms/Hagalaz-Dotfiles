@@ -31,3 +31,28 @@
 
 -- OBS save replay buffer clip
 o.bind("SUPER + F1", "OBS - Save replay buffer", "obs-cmd --websocket obsws://127.0.0.1:4455/RCKr8DFkp35pDwK1 replay save")
+
+-- Vim-style focus: free up SUPER + H/J/K/L
+hl.unbind("SUPER + H")
+hl.unbind("SUPER + J")
+hl.unbind("SUPER + K")
+hl.unbind("SUPER + L")
+o.bind("SUPER + H", "Focus left",  hl.dsp.focus({ direction = "l" }))
+o.bind("SUPER + J", "Focus down",  hl.dsp.focus({ direction = "d" }))
+o.bind("SUPER + K", "Focus up",    hl.dsp.focus({ direction = "u" }))
+o.bind("SUPER + L", "Focus right", hl.dsp.focus({ direction = "r" }))
+
+-- Re-homed defaults
+hl.unbind("SUPER + SLASH")
+hl.unbind("SUPER + BACKSLASH")
+hl.unbind("SUPER + SEMICOLON")
+o.bind("SUPER + SLASH",     "Keybindings",           "omarchy menu keybindings")
+o.bind("SUPER + BACKSLASH", "Toggle window split",   hl.dsp.layout("togglesplit"))
+o.bind("SUPER + SEMICOLON", "Cycle workspace layout","omarchy-hyprland-workspace-layout-toggle")
+
+-- Vim-style swap
+o.bind("SUPER + SHIFT + H", "Swap window left",  hl.dsp.window.swap({ direction = "l" }))
+o.bind("SUPER + SHIFT + J", "Swap window down",  hl.dsp.window.swap({ direction = "d" }))
+o.bind("SUPER + SHIFT + K", "Swap window up",    hl.dsp.window.swap({ direction = "u" }))
+o.bind("SUPER + SHIFT + L", "Swap window right", hl.dsp.window.swap({ direction = "r" }))
+

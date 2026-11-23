@@ -31,18 +31,18 @@ gui:
       - '#b8323a' # muted blood red
     defaultFgColor:
       - '#d5cbbb' # bone
+    # Author names in dusty mauve, except you, in bone
+    authorColors:
+      '*': '#8c6a76'
+    # Branches: main lines burn red, the rest stay near-monochrome
+    branchColorPatterns:
+      '^(main|master)$': '#c1121f'
+      '^(develop|dev)$': '#a8956a'
+      '^feature/': '#7d8a68'
+      '^(fix|hotfix|bugfix)/': '#d4474d'
+      '^release/': '#6f7f8c'
   # Sharp corners, like the Hyprland frames (rounding = 0)
   border: single
-  # Author names in dusty mauve, except you, in bone
-  authorColors:
-    '*': '#8c6a76'
-  # Branches: main lines burn red, the rest stay near-monochrome
-  branchColorPatterns:
-    '^(main|master)$': '#c1121f'
-    '^(develop|dev)$': '#a8956a'
-    '^feature/': '#7d8a68'
-    '^(fix|hotfix|bugfix)/': '#d4474d'
-    '^release/': '#6f7f8c'
   # Elder Futhark spinner, ending on Hagalaz itself.
   # Needs a font with rune glyphs (e.g. Noto Sans Runic); remove this block if they render as boxes.
   spinner:

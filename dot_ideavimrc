@@ -1,0 +1,31 @@
+let mapleader=" "
+
+set number
+set scrolloff=8
+set incsearch
+set hlsearch
+set clipboard+=unnamedplus
+
+" Emulated plugins (built into IdeaVim)
+set surround
+set commentary
+set highlightedyank
+set which-key
+set notimeout
+
+" LazyVim-style mappings → IntelliJ actions
+nmap <leader><leader> <Action>(GotoFile)
+nmap <leader>ff <Action>(GotoFile)
+nmap <leader>/ <Action>(FindInPath)
+nmap <leader>sg <Action>(FindInPath)
+nmap <leader>e <Action>(ActivateProjectToolWindow)
+nmap <leader>ca <Action>(ShowIntentionActions)
+nmap <leader>cr <Action>(RenameElement)
+nmap <leader>cf <Action>(ReformatCode)
+nmap gr <Action>(FindUsages)
+nmap gi <Action>(GotoImplementation)
+nmap ]d <Action>(GotoNextError)
+nmap [d <Action>(GotoPreviousError)
+nmap <S-h> <Action>(PreviousTab)
+nmap <S-l> <Action>(NextTab)
+nmap <leader>bd <Action>(CloseContent)
